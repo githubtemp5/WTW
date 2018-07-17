@@ -1,13 +1,20 @@
-Ask Ingmar Question on:
-  What is the role of WTW between Client Client and Insurer
-  What are selling(product)?
   Data Source(XML File)
-    Journal Type
-    Journal Source
+
     Contract Year(How long does the contrac last?)
     Accounting Period(Is it related to tax year?)
     Product( What does each product mean?)
     
+    20% represents 80% of the business
+    
+    PMI
+    Description(column B)
+    Base Amount (-) Negative Base amount is the revenue   Rebate
+    Transaction Date
+    Client
+    Insurer
+    =>Source of Business    WTW, Others
+    Insurer
+    ** Client Penetration
     
     
 Programming: Find a way to convert the xml file to DataFrame.
