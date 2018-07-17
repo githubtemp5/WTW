@@ -1,0 +1,13 @@
+Ask Ingmar Question on:
+  What is the role of WTW between Client Client and Insurer
+  What are selling(product)?
+  Data Source(XML File)
+    Journal Type
+    Journal Source
+    Contract Year(How long does the contrac last?)
+    Accounting Period(Is it related to tax year?)
+    Product( What does each product mean?)
+    
+    
+    
+Programming: Find a way to convert the xml file to DataFrame.
