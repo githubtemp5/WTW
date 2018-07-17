@@ -1,4 +1,4 @@
-  Data Source(XML File)
+Data Source(XML File)
 
     Contract Year(How long does the contrac last?)
     Accounting Period(Is it related to tax year?)
@@ -16,6 +16,25 @@
     Insurer
     ** Client Penetration
     
+    2.5 Years of Data
+    
+    Retirement Data(Indivudal Driven) 
+    write off: consulting: realisation rate 
+    WIP Consulting Time  (Consulting and Solution)
+    Write-Off
+    Software and Other Product Revenue
+    Consulting Realisation
+    Consulting Utilisation
+    Weight FTE
+    Net Revenue / Total Comp & Benefits
+    
+    Consulting part 2 Data (In-depth consulting details)
+    Assicuate Career Level
+    Weighted FTE
+    Client Billable Hours(Actual)
+    Effective Bill Rate
+    Consultung Revenue(financial basis)
+    Utilisation Rate
     
 Programming: Find a way to convert the xml file to DataFrame.
 
