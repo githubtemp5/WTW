@@ -1,0 +1,17 @@
+# WTW
+
+Model 1:
+How many clients do we expect to get?  ->>> How many clients come back?
+
+Model 2:
+Most demanding product for subsequent years. ->>> Which products we have lost and gained?
+
+Model 3:
+The amount of transaction to be made to clients. (If clients are buying £5000 worth of products for the past 5 years and might increase the amount of transaction)
+
+Model 4:
+Product recommendation. Taking an analogy to movies recommendation, when a user watches a movie it appears other movies might be recommendable based on user interest.
+We could model a neural net capable of recommending products and services offered by WTW based on previous experiences.
+This could be classified from industry -> products offered previously
+
+Additional work: New incoming products to be added and the system would try to identify potential interested clients
