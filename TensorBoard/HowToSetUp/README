@@ -1,0 +1,10 @@
+in python:
+from keras.callbacks import TensorBoard
+
+tensorboard = TensorBoard(log_dir='LOCATIONinPC\\{}'.format(time()))
+
+summary = model.fit(...,callbacks=[tensorboard])
+
+
+in conda prompt:
+tensorboard --logdir=LOCATIONinPC
