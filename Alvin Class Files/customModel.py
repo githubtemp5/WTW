@@ -12,9 +12,10 @@ from keras.optimizers import SGD
 from keras import Input, layers
     
 __main__ = "__main__"
-features = ['Existing book']
+features = ['Year', 'Month','Existing book']
 output = 'Sales'
 file_path = "C:\\Users\\ShresthaAl\\Documents\\Datasets\\PMI_dataset_large_2_converted.csv"
+models_path = "C:\\Users\\ShresthaAl\\Documents\\models\\"
 learning_rate = 0.01
 epoch_rate = 100
 batch_size_rate = 1
@@ -40,11 +41,11 @@ class CustomModel:
         
         #hidden layers
         dense_layer_1 = layers.Dense(5, activation='relu')(input_layer)
-        #dense_layer_2 = layers.Dense(5, activation='relu')(dense_layer_1)
+        dense_layer_2 = layers.Dense(5, activation='relu')(dense_layer_1)
         #dense_layer_3 = layers.Dense(5, activation='relu')(dense_layer_1)
         
         #output layer
-        output_layer = layers.Dense(1, activation='linear')(dense_layer_1)
+        output_layer = layers.Dense(1, activation='linear')(dense_layer_2)
         self.model = Model(input_layer, output_layer)
         self.model.summary()
         
@@ -59,58 +60,61 @@ class CustomModel:
         self.model.fit(X_train, y_train, batch_size=batch_size_rate, epochs = epoch_rate, validation_split = validation_split_rate, callbacks=[tensorboard])
         
     def evaluateModel(self):
-        score = self.model.evaluate(X_test, y_test)
+        notRel, X_te, notRel2, y_te = preprocess (X_train, X_test, y_train, y_test, True)
+        score = self.model.evaluate(X_te, y_te)
         print('SCORE:    ')
-        print(score) 
+        print(score)
+    
     def saveModel(self, modelName):
-        self.model.save(modelName)
+        self.model.save(models_path+modelName)
         
     #predict
-    def customPredict(self,a):
-        predData = pd.read_csv("C:\\Users\\ShresthaAl\\Documents\\Datasets\\predictValues.csv" , sep=',')
+    def customPredict(self, index):
+       # predData = pd.read_csv("C:\\Users\\ShresthaAl\\Documents\\Datasets\\predictValues.csv" , sep=',')
         print('Predictions: ')
-        predicts = self.model.predict(predData.iloc[a:][features])
+        predicts = self.model.predict(X_test.iloc[index:][features], steps=5)
+        print(X_test[index:])
         print(predicts)
         
     def loadM(self,file_name):
-        self.model = load_model(file_name)
+        self.model = load_model(models_path+file_name)
 
         
 #preprocessing data
 
-def preprocess(X_train, X_test, y_train, y_test):
+def preprocess(X_tr, X_te, y_tr, y_te, testProcess):
     
-    mean = X_train.mean(axis=0)
-    X_train -= mean
-    std = X_train.std(axis=0)
-    X_train /= std
+    mean = X_tr.mean(axis=0)
+    X_tr -= mean
+    std = X_tr.std(axis=0)
+    X_tr /= std
     
-    mean = y_train.mean(axis=0)
-    y_train -= mean
-    std = y_train.std(axis=0)
-    y_train /= std
+    mean = y_tr.mean(axis=0)
+    y_tr -= mean
+    std = y_tr.std(axis=0)
+    y_tr /= std
     
-    print(X_train)
-    mean = X_test.mean(axis=0)
-    X_test -= mean
-    std = X_test.std(axis=0)
-    X_test /= std
+    if testProcess:
+        mean = X_te.mean(axis=0)
+        X_te -= mean
+        std = X_te.std(axis=0)
+        X_te /= std
+        
+        
+        mean = y_te.mean(axis=0)
+        y_te -= mean
+        std = y_te.std(axis=0)
+        y_te /= std
     
-    
-    mean = y_test.mean(axis=0)
-    y_test -= mean
-    std = y_test.std(axis=0)
-    y_test /= std
-    
-    return X_train, X_test, y_train, y_test
+    return X_tr, X_te, y_tr, y_te
     
      #plot scattergraph   
 def plotInfo():
 
-    cols = ['Year', 'Month', 'Existing book', 'New Business', 'Lost Business', 'Sales']
+    #cols = ['Year', 'Month', 'Existing book', 'New Business', 'Lost Business', 'Sales']
     
     #sns.lmplot(data = dataframe, x='Sales', y='Existing book', hue='Sales', fit_reg=False)
-    sns.pairplot(dataframe[cols], size=2.5)
+    sns.pairplot(dataframe[dataframe.columns], size=2.5)
     plt.tight_layout()
     plt.show()
 
@@ -131,5 +135,5 @@ if(__main__ == "__main__"):
     tensorboard = TensorBoard(log_dir="C:\\Users\\ShresthaAl\\Documents\\results\\{}".format(time()))
     
     
-    X_train, X_test, y_train, y_test = preprocess(X_train, X_test, y_train, y_test)
+    X_train, X_test, y_train, y_test = preprocess(X_train, X_test, y_train, y_test, False)
     m = CustomModel()
