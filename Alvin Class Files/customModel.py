@@ -12,11 +12,11 @@ from keras.optimizers import SGD
 from keras import Input, layers
     
 __main__ = "__main__"
-features = ['Year', 'Existing book']
+features = ['Year', 'Month', 'Existing book']
 output = 'Sales'
 file_path = "C:\\Users\\ShresthaAl\\Documents\\Datasets\\PMI_dataset_large_2_converted.csv"
 learning_rate = 0.01
-np.random.seed(1337)
+#np.random.seed(1337)
 
 #sns.lmplot(data = dataframe, x='x1', y='x2', hue='y', fit_reg=False)
 #plt.show()    
@@ -27,7 +27,7 @@ class CustomModel:
           
         #initialising a model
         input_layer = Input(shape =(len(features),))
-        dense_layer_1 = layers.Dense(5, activation='relu')(input_layer)
+        dense_layer_1 = layers.Dense(3, activation='relu')(input_layer)
         output_layer = layers.Dense(1)(dense_layer_1)
         
         self.model = Model(input_layer, output_layer)
@@ -41,8 +41,10 @@ class CustomModel:
         
 
         #train the model
-        self.model.fit(X_train, y_train, batch_size=10, epochs = 100, validation_split = 0.1, callbacks=[tensorboard])
+        self.model.fit(X_train, y_train, batch_size=10, epochs = 1000, validation_split = 0.1, callbacks=[tensorboard])
         
+        score = self.model.evaluate(X_train, y_train)
+        print(score)
         # input_tensor = Input(shape =(64,))
         # x = layers.Dense(32, activation='relu')(input_tensor)
         # x = layers.Dense(32, activation='relu')(x)
@@ -52,12 +54,13 @@ class CustomModel:
         
         
         
+        
     #predict
-    def predict(self, a):
+    def customPredict(self,a):
         predData = pd.read_csv("C:\\Users\\ShresthaAl\\Documents\\Datasets\\predictValues.csv" , sep=',')
         print('Predictions: ')
-        predicts = self.model.predict(predData.iloc[:][features].values, verbose=0, steps=10)
-        print(predicts[:][0])
+        predicts = self.model.predict(predData.iloc[a:a+1][features])
+        print(predicts)
         
 #preprocessing data
 
