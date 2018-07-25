@@ -10,6 +10,7 @@ from keras.layers import Dense
 from keras.callbacks import TensorBoard
 from keras.optimizers import SGD
 from keras import Input, layers
+from random import randint
     
 __main__ = "__main__"
 features = ['Year', 'Month','Existing book']
@@ -67,6 +68,7 @@ class CustomModel:
     
     def saveModel(self, modelName):
         self.model.save(models_path+modelName)
+        print("Model saved at :", models_path+modelName)
         
     #predict
     def customPredict(self, index):
@@ -74,7 +76,8 @@ class CustomModel:
         print('Predictions: ')
         predicts = self.model.predict(X_test.iloc[index:][features], steps=5)
         print(X_test[index:])
-        print(predicts)
+        for i in range(0,len(X_test[index:])):
+            print(predicts[i][0])
         
     def loadM(self,file_name):
         self.model = load_model(models_path+file_name)
@@ -124,7 +127,7 @@ if(__main__ == "__main__"):
     dataframe = pd.read_csv(file_path , sep=',')
     
 
-    train_index = dataframe.sample(frac=training_split, random_state=21).index
+    train_index = dataframe.sample(frac=training_split, random_state=randint(5,250)).index
     #assigning training data
     X_train, y_train = dataframe[features],dataframe[output]
         
