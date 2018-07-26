@@ -40,13 +40,16 @@ def main(df):
                      'Quarrying. Mining and related industries', 'Farming and Animal related services', 
                      'News Agencies, Libraries and Museums', 'Recycling, Environmental Resources and related', 
                      'Household activities', 'Agent related', 'Management and Holding Companies']
-
-
-
-
-
-
-
+    
+    place_one = 1
+    place_zero = 0
+    
+    for source in industry_list:
+        for i in range(27):
+            for x in range(27):
+                if(source == industry_list[i]):
+                    df.loc[df['industry']==source, industry_list[i]] = place_one
+                    df.loc[df['industry']==industry_list[x], industry_list[i]] = place_zero
 
 
 """
