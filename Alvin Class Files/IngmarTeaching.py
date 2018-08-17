@@ -95,7 +95,10 @@ class CustomModel:
         self.y = self.y[:self.split_row]
         
         #for features
-        self.x = self.data_np[:,0:2]
+        #this row stores the columns for features, currently [:,0:2] means columns 0 and 1 are features for the program.
+        #if using a different excel file, you can specify the features column like such:
+        #[:0,4,5](meaning columns 1, 3 and 4 from the excel file are features.   
+        self.x = self.data_np[:,0:2]        
         self.x = self.x.reshape(self.d_len,self.x.shape[1])
         self.scaler2 = MinMaxScaler(feature_range=(-1,1))
         self.x = self.scaler2.fit_transform(self.x)
@@ -164,6 +167,9 @@ class CustomModel:
         @method
             Loads an existing model from a given filepath to the system
             It also shows the loss, validation image for the model
+            way to call this method:
+            in the terminal(blank windows on the right side), type in system.load_saved_model("MY_MODEL_NAME_HERE")
+            and press RETURN(ENTER) key.
         """
         self.dropout_rate = dropoutRate
         self.rcurr_dropout = recurrentDropoutRate
@@ -184,6 +190,7 @@ class CustomModel:
             
             self.validation_split    = Validation split between a value of 0 and 1
                                         Example: 0.2 is 20% of the training data is set aside for validation
+                                        To call this method type system.train_model(0.2) in the terminal.
             model_fit_history        = Stores an history object which has information about the training(fitting) of the model
         """
         
